@@ -8,7 +8,7 @@ from scipy.spatial.distance import pdist, squareform
 def rectangle_mask(image_shape):
     center = np.random.rand(2)*image_shape
     angle = np.random.rand(1)*np.pi
-    dims = np.random.rand(2)*image_shape*0.1+image_shape*0.1
+    dims = np.random.rand(2)*image_shape*0.2+image_shape*0.2
     coords = np.indices(image_shape)
     coords = np.moveaxis(coords, 0, -1)
     coords = coords - center
@@ -22,7 +22,7 @@ def random_walks(image_shape):
     center = np.random.randint(0, image_shape, size = 2)
     mask = np.zeros(image_shape, dtype = bool)
     step_positions = np.repeat(center.reshape(1,2), 10, axis = 0)
-    for i in range(int(np.mean(image_shape)//2)):
+    for i in range(int(np.mean(image_shape))):
         step = np.random.choice([-1,1], size = np.shape(step_positions))
         select = np.random.choice([0,1], size = np.shape(step_positions)[0])
         step = step * np.stack([select, 1-select]).T
@@ -35,7 +35,7 @@ def random_walks(image_shape):
 def random_ellipse(image_shape):
     center = np.random.rand(2)*image_shape
     angle = np.random.rand(1)*np.pi
-    dims = np.random.rand(2)*image_shape*0.06+image_shape*0.06
+    dims = np.random.rand(2)*image_shape*0.12+image_shape*0.12
     coords = np.indices(image_shape)
     coords = np.moveaxis(coords, 0, -1)
     coords = coords - center
@@ -51,6 +51,13 @@ def random_n_masks(image_shape, min = 4, max = 7):
         m = np.random.choice([rectangle_mask, random_walks, random_ellipse])(image_shape)
         mask = np.logical_or(mask, m)
     return mask
+
+def mask_constraints(constraints):
+    for i in range(len(constraints)):
+        mask = np.random.choice(range(5), 2, replace=False)
+        for j in mask:
+            constraints[i][j] = None
+    return constraints
 
 def plot_n_topologies(topologies):
     """
