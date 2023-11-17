@@ -174,7 +174,7 @@ def plot_reconstruction(originals, masked, reconstructions):
         axes[i,0].imshow(masked[i], cmap = "gray") # Plot masked on the left
         axes[i,1].imshow(reconstructions[i], cmap = "gray") # Plot reconstruction on the left
         axes[i,2].imshow(originals[i], cmap = "gray") #Plot originals on the right
-        axes[i,3].imshow(originals[i]-reconstructions[i], cmap = "RdBu") #Plot error on the right
+        axes[i,3].imshow(originals[i]-reconstructions[i], cmap = "RdBu", vmin=-1, vmax=1) #Plot error on the right
     fig.tight_layout()
     plt.show()
 
