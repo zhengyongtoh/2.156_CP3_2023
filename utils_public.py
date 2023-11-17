@@ -53,6 +53,7 @@ def random_n_masks(image_shape, min = 4, max = 7):
     return mask
 
 def mask_constraints(constraints):
+    constraints = constraints.copy()
     for i in range(len(constraints)):
         mask = np.random.choice(range(5), 2, replace=False)
         for j in mask:
